@@ -3,29 +3,52 @@ import select
 from time import sleep
 
 import threading
+from typing import Any
+
+def get_default_channel_config():
+    """"Standard Basic Configuration noeeded for the SMU CH to operate at a given Operation Point"""
+    cfg = {
+        'source':{
+            'forcev' : True,
+            'forcei' : False,
+            'levelv' : 1,
+            'limitv' : 1,
+            'limiti' : 1e-3,
+            'leveli' : 1e-3
+        },           
+        'measure':{
+            'rangev': 'auto',
+            'rangei':'auto',
+            'interval': 1,
+        }
+    }
+    return cfg
+
+
 
 class K2636SubClass:
-    
+    """Base Class for all subclasses of SMU in order to mimic the LUA-like beaviour of referencing"""
     def __init__(self,tcpSock):
         self.sock = tcpSock
     
     
+
+
 class TCPInstr:
     INSTR_PORT = 5025
     """Lower Level TCP Socket Handling for TCP-Connected Instruments
     Handling is done without any VISA Connection"""
-    def __init__(self, ip,DEBUG):
+    def __init__(self,debug = False):
 
-        self.debug = DEBUG
-        self.sock = socket()
-        self.sock.settimeout(1000)
+        self.debug = debug
+        
 
-        self.sock.connect((ip, TCPInstr.INSTR_PORT),)
-        self.sock.setsockopt(IPPROTO_TCP,TCP_NODELAY,1024)
+       
         self.readbuf = []
         self.recvbuf = b''
 
         self.line = 0
+        self.connectionStatus = False
 
 
     def write(self, s,):
@@ -42,40 +65,51 @@ class TCPInstr:
         self.sock.sendall(s.encode() + b'\n')
         
     def read(self, timeout = 5.):
-       
-        if not len(self.readbuf):
-            # read with timout
-            waitForData = True
-            while waitForData:
-                ready = select.select([ self.sock ], [], [], timeout)
-                if ready[0]:
-                    self.recvbuf = self.sock.recv(1024)
-                    #print(self.recvbuf)
-                    waitForData = False
-                else:
-                    print('Timeout occured reading data from TCP Socket')
-                    return ''
+        if self.connectionStatus:
+            if not len(self.readbuf):
+                # read with timout
+                waitForData = True
+                while waitForData:
+                    ready = select.select([ self.sock ], [], [], timeout)
+                    if ready[0]:
+                        self.recvbuf = self.sock.recv(1024)
+                        #print(self.recvbuf)
+                        waitForData = False
+                    else:
+                        print('Timeout occured reading data from TCP Socket')
+                        return ''
 
-            # read without timeout
-            #self.recvbuf += self.sock.recv(1024)
-            i = self.recvbuf.rfind(b'\n')
-            self.readbuf = self.recvbuf[:i].split(b'\n')
-            self.recvbuf = self.recvbuf[i+1:]
+                # read without timeout
+                #self.recvbuf += self.sock.recv(1024)
+                i = self.recvbuf.rfind(b'\n')
+                self.readbuf = self.recvbuf[:i].split(b'\n')
+                self.recvbuf = self.recvbuf[i+1:]
 
-        s = self.readbuf[0]
-        del self.readbuf[0]
-        # print(s.decode())
+            s = self.readbuf[0]
+            del self.readbuf[0]
+            # print(s.decode())
 
-        return s.decode()
+            return s.decode()
 
     def query(self,cmd):
-       
+        
         self.write(cmd)
         return self.read()
 
 
     def close(self):
         self.sock.close()
+        self.connectionStatus = False
+
+    def connect_to(self,ip,port,timeout = 1000):
+        self.portUsed = port
+        self.ipUsed = ip
+
+        self.sock = socket()
+        self.sock.settimeout(timeout)
+        self.sock.connect((self.ipUsed,self.portUsed))
+        self.sock.setsockopt(IPPROTO_TCP,TCP_NODELAY,1024)
+        self.connectionStatus = True
 
 class Source:
     def __init__(self,smuName,sock) -> None:
@@ -162,10 +196,10 @@ class Measure:
     def autorangeV(self,state):
         self.sock.write(self.smuName+".measure.autorangev ="+str(state))
         
-    def rangeI(self,range):
-        self.sock.write(self.smuName+".measure.rangei ="+str(range))
-    def rangeV(self,range):
-        self.sock.write(self.smuName+".measure.rangev ="+str(range))
+    def rangeI(self,ran):
+        self.sock.write(self.smuName+".measure.rangei ="+str(ran))
+    def rangeV(self,ran):
+        self.sock.write(self.smuName+".measure.rangev ="+str(ran))
         
     def nplc(self,val):
         if not 0.001 <= val <= 25:
@@ -201,6 +235,7 @@ class Errorqueue(K2636SubClass):
     def __init__(self, tcpSock):
         super().__init__(tcpSock)
         self.error_dump = []
+
     def get_length(self):
         numErrors = self.sock.query('print(errorqueue.count)')
         numErrors = int(float(numErrors))
@@ -262,22 +297,22 @@ class K2636:
     SMUB = 'smub'
     OUTPUT_DCAMPS = 0
     OUTPUT_DCVOLTS = 1
+
     def __init__(self,ip='192.168.0.056',debug = False):
         self.tcpIp = ip
-        self.tcpSock = TCPInstr(self.tcpIp,DEBUG=debug)
+        self.tcpSock = TCPInstr(debug=debug)
         
         self.error_queue = Errorqueue(self.tcpSock)
         self.display = Display(self.tcpSock)
         self.smua = SMU('smua',self.tcpSock)
         self.smub = SMU('smub',self.tcpSock)
 
-
-    def tcpReconnect(self):
-        """Forceful TCP-Socket Reconnection"""
-        del(self.tcpSock)
-        self.tcpSock = TCPInstr(self.tcpIp)
+    def tcpConnect(self,ip,port):
+        """Connects to the provided tcp endpoint"""
+        self.tcpSock.connect_to(ip,port)
 
     def reset(self):
+        """Resets the instrument"""
         self.tcpSock.write('reset()')
 
     def getDeviceInfo(self):
@@ -299,10 +334,12 @@ class K2636:
         return idData
 
     def write_digIO(self,pin,state=True):
+        """Sets the Digital IO-Line <pin> to <state>"""
         if state:
             state=1
         else:
             state=0
+        
 
         self.tcpSock.write('digio.writebit('+str(pin)+','+str(state)+')') 
 
@@ -313,9 +350,14 @@ class K2636:
         self.tcpSock.write("beeper.enable = beeper.ON")
         self.tcpSock.write("beeper.beep("+str(t)+","+str(f)+")")
 
-    def welcome(self):
-        self.beep(0.25,600)
-        self.beep(0.5,1200)
+    def fanfareConnect(self):
+        self.beep(0.1,600)
+        self.beep(0.1,1200)
+        self.beep(0.25,2400)
+    
+    def fanfareDisonnect(self):
+        self.beep(0.1,2400)
+        self.beep(0.1,1200)
         self.beep(0.25,600)
 
 
@@ -330,25 +372,53 @@ class K2636:
             raise NotImplementedError
         return s
     def _verifyRangeInput(self,s,iRange,vRange):
-        if not iRange =='auto':
+        if not iRange.lower() =='auto':
             s.measure.rangeI(str(iRange))
         else:
            
             s.measure.autorangeI(1)
         
-        if not vRange == 'auto':
+        if not vRange.lower() == 'auto':
             s.measure.rangeV(str(vRange))
         else:
             s.measure.autorangeV(1)
             
+    def applyConfig(self,smuName,cfg):
+        """Sends the given Config via the underlying tcp socket to the intrument"""
+        src = cfg['source']
+        meas = cfg['measure']
+        if cfg['source']['forcev']:
+            #voltage is force
+            self.applyVoltage(smuName,src['levelv'],src['limiti'],meas['rangei'],meas['rangev'])
+        else:
+            #current is force
+            self.applyCurrent(smuName,src['leveli'],src['limitv'],meas['rangei'],meas['rangev'])
+        
+
+
      
     def setIntegrationTime(self,smu,tInt,fLine=50):
+        """Set's the <smu>'s integration time <tInt> to the desired value.
+        The internal ADC of the K2600 series adc's rely entirely on NPLC- Number of Power Line Cycles.
+        The boundries of NPLC are:
+            0.001 < NPLC < 25
+        
+        Therefore the Power Line frequency (usually 50 Hz) creates the following boundries
+        
+            0.001/f < NPLC < 25/f
+
+            2e-5 s < tInt < 0.5s
+            
+         """
+        
         s= self._veritfySmuName(smu)
         s.measure.nplc(tInt*fLine)
                
     def applyVoltage(self,smu,volts,ilim=1e-2,iRange='auto',vRange='auto'):
+        """Simple High Level API to apply a voltage level <volts> to an SMU (a or b)
+        The underlying handling for range and limits are derived from the given input
+        """
      
-       
         s = self._veritfySmuName(smu)
         self.display.setMeasureFunc(s.name,K2636.DISP_MEAS_FUNC_AMP)
         self.display.setNumDigits(s.name,6)
@@ -362,6 +432,9 @@ class K2636:
         
         
     def applyCurrent(self,smu,amps,vlim=1,vRange='auto',iRange='auto'):
+        """Simple High Level API to apply a current level <amps> to an SMU (a or b)
+        The underlying handling for range and limits are derived from the given input
+        """
         
        
         s = self._veritfySmuName(smu)
@@ -375,5 +448,45 @@ class K2636:
         s.source.output(1)
         s.source.leveli(amps)
             
-              
+    def measure(self,smuName,params):
+        if smuName == 'smua':
+            smu =self.smua
+        elif smuName == 'smub':
+            smu = self.smub  
+    
+        results = {}
+        
+        for param in params:
+            if param == 'v':
+                func = smu.measure.v
+            elif param == 'i':
+                func = smu.measure.i
+            elif param =='r':
+                func = smu.measure.r
+            elif param == 'p':
+                func = smu.measure.p
+    
+            results[param] = func()
+        return results
+
+    def setOutput(self,smuName:str,state:bool):
+        if state:
+            state = 1
+        else: 
+            state = 0
             
+        """Sets the Output of <smuName> to <state>"""
+        self.tcpSock.write(smuName+'.source.output='+str(state))
+
+    
+    def check_errors(self):
+        num = self.error_queue.get_length()
+        if num:
+            return True
+        else:
+            return False
+
+    def readErrors(self,autosave=False):
+        return self.error_queue.read_all(autosave=autosave)
+    
+    

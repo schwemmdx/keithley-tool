@@ -1,0 +1,14 @@
+{
+    "files": [
+        "main_gui.py",
+        "forms/maingui.ui",
+        "forms/maingui_.ui",
+        "forms/smu_control_dock.ui",
+        "forms/smu_detail_config.ui",
+        "forms/smu_basic_control.ui",
+        "forms/tcp_settings.ui",
+        "forms/measure_dock.ui",
+        "forms/tcp_console.ui",
+        "forms/script_dlg.ui"
+    ]
+}
