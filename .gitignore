@@ -1,1 +1,12 @@
-pyforms/
+pyforms/*
+pyforms/ui_maingui.py
+pyforms/__init__.py
+pyforms/ui_measure_dock.py
+pyforms/ui_tcp_settings.py
+pyforms/ui_smu_control_dock.py
+pyforms/__pycache__/__init__.cpython-310.pyc
+pyforms/__pycache__/ui_maingui.cpython-310.pyc
+pyforms/__pycache__/ui_error_dlg.cpython-310.pyc
+pyforms/__pycache__/ui_settings_dialog.cpython-310.pyc
+pyforms/__pycache__/ui_smu_basic_control.cpython-310.pyc
+pyforms/__pycache__/ui_smu_control_widget.cpython-310.pyc

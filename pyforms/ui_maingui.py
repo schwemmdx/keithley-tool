@@ -27,24 +27,54 @@ class Ui_MainWindow(object):
         self.actionConnect = QAction(MainWindow)
         self.actionConnect.setObjectName(u"actionConnect")
         self.actionConnect.setCheckable(True)
-        icon = QIcon(QIcon.fromTheme(u"network-wired"))
+        icon = QIcon()
+        iconThemeName = u"network-wired"
+        if QIcon.hasThemeIcon(iconThemeName):
+            icon = QIcon.fromTheme(iconThemeName)
+        else:
+            icon.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+
         self.actionConnect.setIcon(icon)
         self.actionRaw_Console = QAction(MainWindow)
         self.actionRaw_Console.setObjectName(u"actionRaw_Console")
         self.actionRaw_Console.setEnabled(True)
-        icon1 = QIcon(QIcon.fromTheme(u"utilities-terminal"))
+        icon1 = QIcon()
+        iconThemeName = u"utilities-terminal"
+        if QIcon.hasThemeIcon(iconThemeName):
+            icon1 = QIcon.fromTheme(iconThemeName)
+        else:
+            icon1.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+
         self.actionRaw_Console.setIcon(icon1)
         self.actionScripts = QAction(MainWindow)
         self.actionScripts.setObjectName(u"actionScripts")
-        icon2 = QIcon(QIcon.fromTheme(u"application-x-executable"))
+        icon2 = QIcon()
+        iconThemeName = u"application-x-executable"
+        if QIcon.hasThemeIcon(iconThemeName):
+            icon2 = QIcon.fromTheme(iconThemeName)
+        else:
+            icon2.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+
         self.actionScripts.setIcon(icon2)
         self.actionSettings = QAction(MainWindow)
         self.actionSettings.setObjectName(u"actionSettings")
-        icon3 = QIcon(QIcon.fromTheme(u"package-x-generic"))
+        icon3 = QIcon()
+        iconThemeName = u"package-x-generic"
+        if QIcon.hasThemeIcon(iconThemeName):
+            icon3 = QIcon.fromTheme(iconThemeName)
+        else:
+            icon3.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+
         self.actionSettings.setIcon(icon3)
         self.actionBasic_SMU_Control = QAction(MainWindow)
         self.actionBasic_SMU_Control.setObjectName(u"actionBasic_SMU_Control")
-        icon4 = QIcon(QIcon.fromTheme(u"utilities-system-monitor"))
+        icon4 = QIcon()
+        iconThemeName = u"utilities-system-monitor"
+        if QIcon.hasThemeIcon(iconThemeName):
+            icon4 = QIcon.fromTheme(iconThemeName)
+        else:
+            icon4.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
+
         self.actionBasic_SMU_Control.setIcon(icon4)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
