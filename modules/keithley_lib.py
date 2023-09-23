@@ -1,4 +1,5 @@
 from socket import *
+
 import select
 from time import sleep
 
@@ -42,7 +43,7 @@ class TCPInstr:
 
         self.debug = debug
         
-
+        self.timeout_s = 5.
        
         self.readbuf = []
         self.recvbuf = b''
@@ -64,13 +65,13 @@ class TCPInstr:
         
         self.sock.sendall(s.encode() + b'\n')
         
-    def read(self, timeout = 5.):
+    def read(self):
         if self.connectionStatus:
             if not len(self.readbuf):
                 # read with timout
                 waitForData = True
                 while waitForData:
-                    ready = select.select([ self.sock ], [], [], timeout)
+                    ready = select.select([ self.sock ], [], [], self.timeout_s)
                     if ready[0]:
                         self.recvbuf = self.sock.recv(1024)
                         #print(self.recvbuf)
@@ -104,12 +105,16 @@ class TCPInstr:
     def connect_to(self,ip,port,timeout = 1000):
         self.portUsed = port
         self.ipUsed = ip
-
+        self.timeout_s = timeout/1e3
+        
+    
         self.sock = socket()
-        self.sock.settimeout(timeout)
+
         self.sock.connect((self.ipUsed,self.portUsed))
+        self.sock.settimeout(int(self.timeout_s))
         self.sock.setsockopt(IPPROTO_TCP,TCP_NODELAY,1024)
         self.connectionStatus = True
+        
 
 class Source:
     def __init__(self,smuName,sock) -> None:
@@ -217,6 +222,9 @@ class SMU:
         self.sock = sock
         self.measure = Measure(name,self.sock)
         self.source = Source(name,self.sock)
+    
+    def reset(self):
+        self.sock.write(f"{self.name}.reset()")
 
 class KeithleyError:
     
@@ -301,19 +309,21 @@ class K2636:
     def __init__(self,ip='192.168.0.056',debug = False):
         self.tcpIp = ip
         self.tcpSock = TCPInstr(debug=debug)
-        
         self.error_queue = Errorqueue(self.tcpSock)
         self.display = Display(self.tcpSock)
         self.smua = SMU('smua',self.tcpSock)
         self.smub = SMU('smub',self.tcpSock)
 
-    def tcpConnect(self,ip,port):
+    def tcpConnect(self,ip,port,timeout=1000):
         """Connects to the provided tcp endpoint"""
-        self.tcpSock.connect_to(ip,port)
+        self.tcpSock.connect_to(ip,port,timeout)
 
     def reset(self):
         """Resets the instrument"""
         self.tcpSock.write('reset()')
+
+    def isConnected(self):
+        return self.tcpSock.connectionStatus
 
     def getDeviceInfo(self):
             
@@ -427,7 +437,7 @@ class K2636:
         s.source.func(K2636.OUTPUT_DCVOLTS)
         self._verifyRangeInput(s,iRange,vRange)
         s.source.limiti(ilim)
-        s.source.output(1)
+        
         s.source.levelv(volts)
         
         
@@ -445,7 +455,6 @@ class K2636:
         s.source.func(K2636.OUTPUT_DCAMPS)
         self._verifyRangeInput(s,iRange,vRange)
         s.source.limitv(vlim)
-        s.source.output(1)
         s.source.leveli(amps)
             
     def measure(self,smuName,params):
