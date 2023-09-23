@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>SMUBasicControl</class>
  <widget class="QWidget" name="SMUBasicControl">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -387,23 +390,26 @@
     </spacer>
    </item>
    <item row="3" column="2">
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="resetSMUBtn">
      <property name="text">
       <string>Reset</string>
      </property>
     </widget>
    </item>
    <item row="3" column="3">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="applyBtn">
      <property name="text">
       <string>Apply</string>
      </property>
     </widget>
    </item>
    <item row="3" column="4">
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="enableBtn">
      <property name="text">
       <string>Enable</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
