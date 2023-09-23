@@ -1,7 +1,6 @@
 {
     "files": [
         "forms/maingui.ui",
-        "forms/maingui_.ui",
         "forms/smu_control_dock.ui",
         "forms/smu_detail_config.ui",
         "forms/smu_basic_control.ui",
@@ -10,7 +9,6 @@
         "forms/tcp_console.ui",
         "forms/script_dlg.ui",
         "forms/settings_dialog.ui",
-        "main.py",
-        "forms/smu_control_widget.ui"
+        "main.py"
     ]
 }

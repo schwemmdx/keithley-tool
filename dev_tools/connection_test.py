@@ -1,4 +1,4 @@
-from keithley_lib import K2636
+from modules.keithley_lib import K2636
 
 
 k = K2636()

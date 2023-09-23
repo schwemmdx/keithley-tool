@@ -1,5 +1,5 @@
 # This Python file uses the following encoding: utf-8
-REBUILD_UI_FILES = False
+REBUILD_UI_FILES = True
 
 import os
 from pathlib import Path
@@ -14,23 +14,18 @@ from PySide6.QtCore import QFile
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPalette
  
-from keithley_lib import K2636,get_default_channel_config
+from modules.keithley_lib import K2636,get_default_channel_config
 
 import pyqtgraph as pg
 from threading import Thread
-import syntax
+import modules.syntax as syntax
 import numpy as np
 
+from build_tasks import force_rebuild
 
-import subprocess, os, platform
+import subprocess, os
 
-if REBUILD_UI_FILES:
-    for file in os.listdir('./forms'):
-        if file.endswith('.ui'):
-            os.system(r"C:\Users\priganns\AppData\Roaming\Python\Python311\Scripts\pyside6-uic.exe " +f"-o ./pyforms/{file.replace('.ui','.py')} ./forms/{file}")
-            print(f"Converted {file}")
-    print("Coversion Done!")
-
+force_rebuild()
 
 try:
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1418</width>
+    <height>771</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>36</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftToolBarArea</set>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionConnect"/>
+   <addaction name="actionBasic_SMU_Control"/>
+   <addaction name="actionSettings"/>
+   <addaction name="actionRaw_Console"/>
+   <addaction name="actionScripts"/>
+  </widget>
+  <action name="actionConnect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="network-wired">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Connect</string>
+   </property>
+   <property name="toolTip">
+    <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionRaw_Console">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="utilities-terminal">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Raw Console</string>
+   </property>
+  </action>
+  <action name="actionScripts">
+   <property name="icon">
+    <iconset theme="application-x-executable">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Scripts</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset theme="package-x-generic">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionBasic_SMU_Control">
+   <property name="icon">
+    <iconset theme="utilities-system-monitor">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Basic SMU Control</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

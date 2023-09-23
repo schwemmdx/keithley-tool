@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SMUBasicControl</class>
+ <widget class="QWidget" name="SMUBasicControl">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>434</width>
+    <height>471</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="5">
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="title">
+      <string>Source Configuration</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_11">
+      <item row="0" column="4">
+       <widget class="QCheckBox" name="voltForceCheck">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Force</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QDoubleSpinBox" name="sourceCurrVal">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-999.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>999.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QCheckBox" name="currForceCheck">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Force</string>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QComboBox" name="sourceVoltPrefix">
+        <item>
+         <property name="text">
+          <string>V</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>mV</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>µV</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>nV</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_25">
+        <property name="text">
+         <string>Voltage</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QDoubleSpinBox" name="sourceVoltVal">
+        <property name="prefix">
+         <string/>
+        </property>
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-999.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>999.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_26">
+        <property name="text">
+         <string>Current</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="sourceCurrPrefix">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <item>
+         <property name="text">
+          <string>mA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>µA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>nA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>pA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>A</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="5">
+    <widget class="QGroupBox" name="groupBox_9">
+     <property name="title">
+      <string>Measure Configuration</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_10">
+      <item row="1" column="2">
+       <widget class="QComboBox" name="measCurrRange">
+        <item>
+         <property name="text">
+          <string>Auto</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1e-3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1e-6</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1e-9</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_27">
+        <property name="text">
+         <string>Current Range</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_28">
+        <property name="text">
+         <string>Voltage Range</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QComboBox" name="measVoltRange">
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>Auto</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1e-3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1e-6</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1e-9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_37">
+        <property name="text">
+         <string>Measure Interval</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer_11">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="2">
+       <widget class="QComboBox" name="measInterval">
+        <item>
+         <property name="text">
+          <string>1 s</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>0,1 s</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>0,5 s</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 s</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Selection</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox">
+          <property name="text">
+           <string>V</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="text">
+           <string>I</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_3">
+          <property name="text">
+           <string>R</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_4">
+          <property name="text">
+           <string>P</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>129</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="text">
+      <string>Reset</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Apply</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Enable</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

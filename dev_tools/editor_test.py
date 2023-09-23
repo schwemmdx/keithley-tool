@@ -5,7 +5,7 @@ import sys
 from PySide6 import QtGui
 
 from PySide6.QtWidgets import QApplication,QPlainTextEdit
-import syntax
+import modules.syntax as syntax
 
 app = QApplication(sys.argv)
 
