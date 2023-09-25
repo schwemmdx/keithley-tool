@@ -1,16 +1,20 @@
 {
     "files": [
         "forms/maingui.ui",
-        "forms/maingui_.ui",
-        "forms/smu_control_dock.ui",
-        "forms/smu_detail_config.ui",
         "forms/smu_basic_control.ui",
-        "forms/tcp_settings.ui",
-        "forms/measure_dock.ui",
-        "forms/tcp_console.ui",
         "forms/script_dlg.ui",
         "forms/settings_dialog.ui",
         "main.py",
-        "forms/smu_control_widget.ui"
+        "forms/smu_control_widget.ui",
+        "form_classes/error_dlg.py",
+        "form_classes/__init__.py",
+        "form_classes/main_win.py",
+        "form_classes/settings_dlg.py",
+        "form_classes/smu_basic_control.py",
+        "modules/__init__.py",
+        "modules/keithley_lib.py",
+        "modules/syntax.py",
+        "materials.qrc",
+        "forms/sweep_widget.ui"
     ]
 }
