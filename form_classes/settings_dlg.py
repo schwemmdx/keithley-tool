@@ -14,7 +14,7 @@ class SettingsDialog(QDialog):
         ##later use settings-file for loading previous data
         self.data = {
             'tcp':{
-                'ip': "192.168.0.57",
+                'ip': "192.168.0.56",
                 'port': 5025,
                 'timeout': 1000
             },
