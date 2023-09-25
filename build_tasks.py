@@ -38,25 +38,26 @@ class CmdCol:
 
 def print_info(info_str):
     i = 'INFO'
-    print(CmdCol.Cyan+f"[{i:<5}] {info_str}"+CmdCol.Reset) 
+    print(CmdCol.Cyan+f"[  {i:<5} ] {info_str}"+CmdCol.Reset) 
 
 
 def print_warn(s):
     i = 'WARN'
-    print(CmdCol.Yellow+f"[{i:<5}] {s}"+CmdCol.Reset) 
+    print(CmdCol.Yellow+f"[  {i:<5} ] {s}"+CmdCol.Reset) 
 
 def print_err(s):
     i = 'ERROR'
-    print(CmdCol.Red+f"[{i:<5}] {s}"+CmdCol.Reset) 
+    print(CmdCol.Red+f"[  {i:<5} ] {s}"+CmdCol.Reset) 
 
 
 def build_target_folder(targetpath):
     if os.path.exists(targetpath):
         print_warn("Folder exists, deleting content.")
         shutil.rmtree(targetpath)
-        os.mkdir(targetpath)
-        with open(targetpath+"/__init__.py",'w') as initFile:
-            initFile.write(f"#Auto Generated init File\n#Created {datetime.datetime.now()}\nfrom . import materials_rc")
+    print_info(f"Creating {targetpath} folder")
+    os.mkdir(targetpath)
+    with open(targetpath+"/__init__.py",'w') as initFile:
+        initFile.write(f"#Auto Generated init File\n#Created {datetime.datetime.now()}\nfrom . import materials_rc")
 
 
 
@@ -75,10 +76,12 @@ def build_ui_files(sourcepath,targetpath):
                 exec_path = WIN_UIC_EXEC
             else:     
                 exec_path = LINUX_UIC_EXEC
-
-            os.system(exec_path+f" {sourcepath}/{file}" +f" -o {targetpath}/ui_{file.replace('.ui','.py')}")
+            
+            ret = os.system(exec_path+f" {sourcepath}/{file}" +f" -o {targetpath}/ui_{file.replace('.ui','.py')}")
+            if ret:
+                print_err(f"Error during system call: {ret}")
             convertCounter+=1
-            print(f"[{round(convertCounter/maxUiFiles*100,1):<5} % ]  "+f"{sourcepath+'/'+file:<40} -->\t{UIPY_TARGET_FOLDER}/ui_{file.replace('.ui','.py')}")
+            print(f"[{round(convertCounter/maxUiFiles*100,1):<5} % ] "+f"{sourcepath+'/'+file:<40} -->\t{UIPY_TARGET_FOLDER}/ui_{file.replace('.ui','.py')}")
 
 def build_resources(sourcepath,targetpath,filename):
     sys_name = platform.system()
@@ -91,7 +94,7 @@ def build_resources(sourcepath,targetpath,filename):
         exec_path = LINUX_RCC_EXEC
 
     os.system(exec_path+f" {sourcepath+'/'+filename} -o {targetpath+'/'+filename.replace('.qrc','_rc.py')}")
-    print(f"[{100.0:<5} % ] {sourcepath+'/'+filename:<40}-->\t{targetpath+'/'+filename.replace('.qrc','_rc.py')}")
+    print(f"[  {'DONE':<5} ] {sourcepath+'/'+filename:<40} -->\t{targetpath+'/'+filename.replace('.qrc','_rc.py')}")
 
 def clean_ui_files(uiFilePath):
     stat = 'import materials_rc'
