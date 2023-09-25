@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KeithleyTool</class>
+ <widget class="QMainWindow" name="KeithleyTool">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1418</width>
+    <height>771</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../materials.qrc">
+    <normaloff>:/materials/materials/mosfet.png</normaloff>:/materials/materials/mosfet.png</iconset>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftToolBarArea</set>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionConnect"/>
+   <addaction name="actionSettings"/>
+   <addaction name="separator"/>
+   <addaction name="actionBasic_SMU_Control"/>
+   <addaction name="actionSweep_Tool"/>
+   <addaction name="actionRaw_Console"/>
+   <addaction name="actionScripts"/>
+  </widget>
+  <action name="actionConnect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/lan.png</normaloff>
+     <selectedon>:/materials/materials/lan_connected.png</selectedon>:/materials/materials/lan.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connect</string>
+   </property>
+   <property name="toolTip">
+    <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionRaw_Console">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/prompt.png</normaloff>:/materials/materials/prompt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Raw Console</string>
+   </property>
+  </action>
+  <action name="actionScripts">
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/skript.png</normaloff>:/materials/materials/skript.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scripts</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/settings.png</normaloff>:/materials/materials/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionBasic_SMU_Control">
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/multimeter.png</normaloff>:/materials/materials/multimeter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Basic SMU Control</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset theme="battery"/>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSweep_Tool">
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/farbkorrektur.png</normaloff>:/materials/materials/farbkorrektur.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sweep Tool</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../materials.qrc"/>
+ </resources>
+ <connections/>
+</ui>
