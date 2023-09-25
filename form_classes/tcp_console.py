@@ -3,7 +3,6 @@ from PySide6 import QtCore
 from PySide6.QtWidgets import QWidget,QPlainTextEdit,QGridLayout
 from PySide6.QtGui import QFont
 
-from pyforms.ui_tcp_console import Ui_tcpConsole
 from modules.keithley_lib import K2636
 import form_classes
 import modules
