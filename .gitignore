@@ -3,5 +3,5 @@ keithley-tool-gui.pyproject.a*
 form_classes/__pycache__
 modules/__pycache__
 pyforms
-
+__pycache__
 
