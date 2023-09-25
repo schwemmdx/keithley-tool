@@ -10,29 +10,40 @@ from form_classes.settings_dlg import SettingsDialog
 from form_classes.error_dlg import ErrorDialog
 from form_classes.smu_basic_control import SMUControlWidget
 from form_classes.tcp_console import TCPConsole
+from form_classes.sweep_widget import SweepWidget
+
+from pyforms.ui_maingui import Ui_KeithleyTool
 from modules import K2636
 
 class MainGUI(QMainWindow):
     def __init__(self, parent: QWidget | None ,**kwargs) -> None:
         super().__init__(parent, **kwargs)
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_KeithleyTool()
         self.ui.setupUi(self)
 
         #Setup Hardware Devie 
         self.instr = K2636()
         
-
+        self.iconNotConnected = QIcon()
+        self.iconConnected = QIcon()
+        self.iconConnected.addFile(u":/materials/materials/lan_connected.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.iconNotConnected.addFile(u":/materials/materials/lan.png", QSize(), QIcon.Normal, QIcon.Off)
+        
         #seperatee Dialogs and Widgets shown inside the stackwidget
         self.settingsDlg = SettingsDialog(self)
         self.errorDlg = ErrorDialog(self)
         self.smuBasicControl = SMUControlWidget(self,instr=self.instr)
         self.tcpConsole = TCPConsole(self,self.instr)
+        self.sweepWidget = SweepWidget(self)
+
         self.stack = QStackedWidget(self)
 
         self.stack.addWidget(QWidget())
         self.stack.addWidget(self.smuBasicControl)
         self.stack.addWidget(self.errorDlg)
         self.stack.addWidget(self.tcpConsole)
+        self.stack.addWidget(self.sweepWidget)
+
 
         self.setCentralWidget(self.stack)
         self.stack.setCurrentIndex(0)
@@ -47,6 +58,7 @@ class MainGUI(QMainWindow):
         self.ui.actionSettings.triggered.connect(self.settingsDlg.show)
         self.ui.actionBasic_SMU_Control.triggered.connect(lambda : self.stack.setCurrentWidget(self.smuBasicControl))
         self.ui.actionRaw_Console.triggered.connect(lambda: self.stack.setCurrentWidget(self.tcpConsole))
+        self.ui.actionSweep_Tool.triggered.connect(lambda: self.stack.setCurrentWidget(self.sweepWidget))
         
 
 
@@ -77,11 +89,19 @@ class MainGUI(QMainWindow):
 
     def connectionStateChanged(self):
 
+        if self.instr.isConnected():
+
+            self.ui.actionConnect.setIcon(self.iconConnected)
+        else:
+            self.ui.actionConnect.setIcon(self.iconNotConnected)
+            self.stack.setCurrentIndex(0)
+
         for act in [
             self.smuBasicControl.ui.resetInstrBtn,
             self.ui.actionBasic_SMU_Control,
             self.ui.actionRaw_Console,
-            self.ui.actionScripts
+            self.ui.actionScripts,
+            self.ui.actionSweep_Tool
         ]:
             act.setEnabled(self.instr.isConnected())
         
@@ -91,5 +111,5 @@ class MainGUI(QMainWindow):
             channel.ui.enableBtn.setEnabled(self.instr.isConnected())
             channel.ui.resetSMUBtn.setEnabled(self.instr.isConnected())
 
-        if self.instr.isConnected():
-            self.tcpConsole.initConsole()
+        self.tcpConsole.setInteractionState(self.instr.isConnected())
+            
