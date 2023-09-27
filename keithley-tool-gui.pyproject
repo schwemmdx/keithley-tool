@@ -15,6 +15,7 @@
         "modules/keithley_lib.py",
         "modules/syntax.py",
         "materials.qrc",
-        "forms/sweep_widget.ui"
+        "forms/sweep_widget.ui",
+        "forms/error_dlg.ui"
     ]
 }
