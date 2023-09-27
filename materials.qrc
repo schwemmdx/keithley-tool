@@ -22,5 +22,7 @@
         <file>materials/settings.png</file>
         <file>materials/netz_aus.png</file>
         <file>materials/netz_ein.png</file>
+        <file>materials/beachtung.png</file>
+        <file>materials/keine-ergebnisse.png</file>
     </qresource>
 </RCC>
