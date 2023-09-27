@@ -41,6 +41,7 @@ except:
     print("No pre-generated ui.py files found!")
 
 
+from modules.keithley_dipshit import theme
 
 
 class main_gui(QMainWindow):
@@ -165,8 +166,8 @@ class main_gui(QMainWindow):
 
         self.main_ui.actionConnection_Settings.triggered.connect(self.tcpSettings.show)
         self.main_ui.actionRaw_Console.triggered.connect(self.tcpConsole.show)
-        self.main_ui.actionScripts.triggered.connect(self.refresh_script_dlg)
-
+        #self.main_ui.actionScripts.triggered.connect(self.scriptWidgetTriggered)
+        self.main_ui.actiionError.triggered.connect(self.errorDlg.show)
 
         self.main_ui.actionConnect.triggered.connect(self.connect_to_instrument)
         self.tcpSettings_ui.applyBtn.clicked.connect(self.apply_tcp_settings)
@@ -412,6 +413,10 @@ class main_gui(QMainWindow):
             os.startfile(filepath)
         else:                                   # linux variants
             subprocess.call(('xdg-open', filepath))
+
+
+    def scriptWidgetTriggered(self):
+        theme(self.kDevice)
 
 
 if __name__ == "__main__":
