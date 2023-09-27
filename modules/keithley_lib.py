@@ -249,7 +249,7 @@ class Errorqueue(K2636SubClass):
         numErrors = int(float(numErrors))
         return numErrors
      
-    def read_all(self,autosave=True):
+    def read_all(self,autosave=True,save_location='error_dump.log'):
         numErrors = self.get_length()
         
         if numErrors:
@@ -257,7 +257,7 @@ class Errorqueue(K2636SubClass):
                 ans = self.sock.query('print(errorqueue.next())')
                 self.error_dump.append(KeithleyError(ans))
         if autosave:
-            self.save_to_disk('error_dump.log')
+            self.save_to_disk(save_location)
             
         return self.error_dump    
 
@@ -495,7 +495,7 @@ class K2636:
         else:
             return False
 
-    def readErrors(self,autosave=False):
-        return self.error_queue.read_all(autosave=autosave)
+    def readErrors(self,autosave=False,save_location='error_dump.log'):
+        return self.error_queue.read_all(autosave=autosave,save_location=save_location)
     
     
