@@ -15,6 +15,8 @@ from form_classes.sweep_widget import SweepWidget
 from pyforms.ui_maingui import Ui_KeithleyTool
 from modules import K2636
 
+from modules.keithley_dipshit import theme
+
 class MainGUI(QMainWindow):
     def __init__(self, parent: QWidget | None ,**kwargs) -> None:
         super().__init__(parent, **kwargs)
@@ -31,7 +33,7 @@ class MainGUI(QMainWindow):
         
         #seperatee Dialogs and Widgets shown inside the stackwidget
         self.settingsDlg = SettingsDialog(self)
-        self.errorDlg = ErrorDialog(self)
+        self.errorDlg = ErrorDialog(self,instr=self.instr)
         self.smuBasicControl = SMUControlWidget(self,instr=self.instr)
         self.tcpConsole = TCPConsole(self,self.instr)
         self.sweepWidget = SweepWidget(self)
@@ -59,6 +61,7 @@ class MainGUI(QMainWindow):
         self.ui.actionBasic_SMU_Control.triggered.connect(lambda : self.stack.setCurrentWidget(self.smuBasicControl))
         self.ui.actionRaw_Console.triggered.connect(lambda: self.stack.setCurrentWidget(self.tcpConsole))
         self.ui.actionSweep_Tool.triggered.connect(lambda: self.stack.setCurrentWidget(self.sweepWidget))
+        self.ui.actionErrors.triggered.connect(self.onActionErrorDlg)
         
 
 
@@ -100,8 +103,8 @@ class MainGUI(QMainWindow):
             self.smuBasicControl.ui.resetInstrBtn,
             self.ui.actionBasic_SMU_Control,
             self.ui.actionRaw_Console,
-            self.ui.actionScripts,
-            self.ui.actionSweep_Tool
+            self.ui.actionSweep_Tool,
+            self.ui.actionErrors
         ]:
             act.setEnabled(self.instr.isConnected())
         
@@ -113,3 +116,6 @@ class MainGUI(QMainWindow):
 
         self.tcpConsole.setInteractionState(self.instr.isConnected())
             
+    def onActionErrorDlg(self):
+         self.errorDlg.read()
+         self.stack.setCurrentWidget(self.errorDlg)
