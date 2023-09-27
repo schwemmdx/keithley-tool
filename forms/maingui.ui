@@ -75,7 +75,7 @@
    <addaction name="actionBasic_SMU_Control"/>
    <addaction name="actionSweep_Tool"/>
    <addaction name="actionRaw_Console"/>
-   <addaction name="actionScripts"/>
+   <addaction name="actionErrors"/>
   </widget>
   <action name="actionConnect">
    <property name="checkable">
@@ -105,15 +105,6 @@
     <string>Raw Console</string>
    </property>
   </action>
-  <action name="actionScripts">
-   <property name="icon">
-    <iconset resource="../materials.qrc">
-     <normaloff>:/materials/materials/skript.png</normaloff>:/materials/materials/skript.png</iconset>
-   </property>
-   <property name="text">
-    <string>Scripts</string>
-   </property>
-  </action>
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../materials.qrc">
@@ -134,7 +125,8 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="battery"/>
+    <iconset theme="battery">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -147,6 +139,15 @@
    </property>
    <property name="text">
     <string>Sweep Tool</string>
+   </property>
+  </action>
+  <action name="actionErrors">
+   <property name="icon">
+    <iconset resource="../materials.qrc">
+     <normaloff>:/materials/materials/fehler.png</normaloff>:/materials/materials/fehler.png</iconset>
+   </property>
+   <property name="text">
+    <string>Errors</string>
    </property>
   </action>
  </widget>
