@@ -2,8 +2,12 @@
 from typing import Optional
 import traceback
 import PySide6.QtCore
+import PySide6.QtGui
 from pyforms.ui_maingui import *
 from PySide6.QtWidgets import QMainWindow, QStackedWidget,QMessageBox
+
+
+from PySide6.QtGui import QCloseEvent
 
 
 from form_classes.settings_dlg import SettingsDialog
@@ -119,3 +123,9 @@ class MainGUI(QMainWindow):
     def onActionErrorDlg(self):
          self.errorDlg.read()
          self.stack.setCurrentWidget(self.errorDlg)
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        
+        #Kill all subtheads 
+        self.smuBasicControl.measureThreadShouldRun = False
+        return super().closeEvent(event)
