@@ -105,7 +105,7 @@ class TCPInstr:
     def connect_to(self,ip,port,timeout = 1000):
         self.portUsed = port
         self.ipUsed = ip
-        self.timeout_s = timeout/1e3
+        self.timeout_s = int(timeout/1e3)
         
     
         self.sock = socket()
@@ -316,6 +316,7 @@ class K2636:
 
     def tcpConnect(self,ip,port,timeout=1000):
         """Connects to the provided tcp endpoint"""
+        
         self.tcpSock.connect_to(ip,port,timeout)
 
     def reset(self):
