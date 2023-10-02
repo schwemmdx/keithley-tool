@@ -22,6 +22,8 @@ class SMUControlWidget(QWidget):
         self.ui = Ui_SMUControlWidget()
         self.ui.setupUi(self)
 
+        self.secMeasInterval = 1.0
+
         self.measureData = {
             'smua':
             {
@@ -63,45 +65,76 @@ class SMUControlWidget(QWidget):
         self.ui.tabWidget.setTabIcon(1,self.smubIcon)
 
 
-        self.upperCanvas = pg.PlotWidget(self)
-        self.lowerCanvas = pg.PlotWidget(self)
-        self.ui.graphLayout.addWidget(self.upperCanvas)
-        self.ui.graphLayout.addWidget(self.lowerCanvas)
+        
+        self.view = pg.GraphicsLayoutWidget(size=(100,100))
+        self.ui.graphLayout.addWidget(self.view)
 
-        self.upperCanvas.setLabel('left', "Voltage [V]")#
-        self.lowerCanvas.setLabel('left', "Current [A]")
-        self.upperCanvas.setLabel('bottom', "Time  [n*s]")
-        self.lowerCanvas.setLabel('bottom', "Time  [n*s]")
+
+        # self.ui.graphLayout.addWidget(self.lowerCanvas)
+        
 
         self.smuaPen = pg.mkPen({'width': 2,'color': "#4E79A7",'cosmetic':True})
         self.smubPen = pg.mkPen({'width': 2,'color': "#F28E2B",'cosmetic':True})
        
        
-        self.measureData['smua']['vItem']= pg.PlotDataItem(x= self.measureData['comul_time'],y = self.measureData['smua']['v'],
-            pen=self.smuaPen,symbol ='o', symbolBrush =("#4E79A7"),antialias=True)
+        self.measureData['smua']['vItem']= pg.PlotDataItem(x= self.measureData['comul_time'],
+                                                        y = self.measureData['smua']['v'],
+                                                        pen=self.smuaPen,
+                                                        symbol ='o', 
+                                                        symbolBrush =("#4E79A7"),
+                                                        antialias=True
+                                                        )
+       
         self.measureData['smua']['iItem']= pg.PlotDataItem(x= self.measureData['comul_time'],y = self.measureData['smua']['i'],
-            pen=self.smuaPen,symbol ='o', symbolBrush =("#4E79A7"),antialias=True)
+             pen=self.smuaPen,symbol ='o', symbolBrush =("#4E79A7"),antialias=True)
         
         self.measureData['smub']['vItem']= pg.PlotDataItem(x= self.measureData['comul_time'],y = self.measureData['smub']['v'],
-            pen=self.smubPen,symbol ='s', symbolBrush =("#F28E2B"),antialias=True)
+             pen=self.smubPen,symbol ='s', symbolBrush =("#F28E2B"),antialias=True)
         self.measureData['smub']['iItem']= pg.PlotDataItem(x= self.measureData['comul_time'],y = self.measureData['smub']['i'],
-            pen=self.smubPen,symbol ='s', symbolBrush =("#F28E2B"),antialias=True)
+             pen=self.smubPen,symbol ='s', symbolBrush =("#F28E2B"),antialias=True)
         
-        self.lowerCanvas.addItem(self.measureData['smua']['vItem'])
-        self.upperCanvas.addItem(self.measureData['smua']['iItem'])
-        self.lowerCanvas.addItem(self.measureData['smub']['vItem'])
-        self.upperCanvas.addItem(self.measureData['smub']['iItem'])
+        
+        
+        self.upperCanvas = self.view.addPlot(row=0,col=0)
+        self.lowerCanvas = self.view.addPlot(row=1,col=0)
+        self.upperCanvas.setLabel('left', "Voltage [V]")
+        self.lowerCanvas.setLabel('left', "Current [A]")
+        self.lowerCanvas.setLabel('bottom', "Time  [n*s]")
+
+
+        self.upperCanvas.setXLink(self.lowerCanvas)
+        self.upperCanvas.getAxis('bottom').setStyle(showValues=False)
+
+        self.upperCanvas.addItem(self.measureData['smua']['vItem'])
+        self.lowerCanvas.addItem(self.measureData['smua']['iItem'])
+        
+        self.measureData['smua']['vItem']
+
+
+        self.lowerCanvas.addItem(self.measureData['smub']['iItem'])
+        self.upperCanvas.addItem(self.measureData['smub']['vItem'])
 
         self.ui.resetInstrBtn.clicked.connect(self.instr.reset)
         self.ui.clearGraphBtn.clicked.connect(self.clearGraphData)
+        self.ui.measInterval.currentIndexChanged.connect(self.measIntervalChanged)
+        
 
         self.measureThreadShouldRun = True
         self.measureThread.start()
+    
+    def measIntervalChanged(self):
+        text = self.ui.measInterval.currentText()
+        val,suffix = text.split(' ')
+        if suffix == 'ms':
+            self.secMeasInterval = float(val)/1e3
+        if suffix == 's':
+            self.secMeasInterval = float(val)
         
 
     def measureTask(self):
 
         while self.measureThreadShouldRun:
+            self.measureData['comul_time'] = np.concatenate([self.measureData['comul_time'],[len(self.measureData['comul_time'])]],0)
             for name,box,uiFields in zip(['smua','smub'],[self.ui.smua_grpBox,self.ui.smub_grpBox],
                                      [(self.ui.smua_v,self.ui.smua_i,self.ui.smua_r,self.ui.smua_p),
                                       (self.ui.smub_v,self.ui.smub_i,self.ui.smub_r,self.ui.smub_p)]):
@@ -126,17 +159,17 @@ class SMUControlWidget(QWidget):
                     uiFields[2].setText(f"{v/i:2.3e}")
                     uiFields[3].setText(f"{v*i:2.3e}")  
 
+                    self.measureData[name]['vItem'].setData(self.measureData['comul_time'],y= self.measureData[name]['v'])
+                    self.measureData[name]['iItem'].setData(self.measureData['comul_time'],y = self.measureData[name]['i'])
+
                     
                 else:
                     for val in uiFields:
                         val.setText('0.0')
 
             self.measureData['comul_time'] = np.concatenate([self.measureData['comul_time'],[len(self.measureData['comul_time'])]],0)
-            self.measureData['smua']['vItem'].setData(self.measureData['comul_time'],y = self.measureData['smua']['v'])
-            self.measureData['smua']['iItem'].setData(self.measureData['comul_time'],y = self.measureData['smua']['i'])
-            self.measureData['smub']['vItem'].setData(self.measureData['comul_time'],y = self.measureData['smub']['v'])
-            self.measureData['smub']['iItem'].setData(self.measureData['comul_time'],y = self.measureData['smub']['i'])
-            sleep(1)
+            
+            sleep(self.secMeasInterval)
             
 
 

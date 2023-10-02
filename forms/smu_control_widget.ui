@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1488</width>
-    <height>683</height>
+    <width>1112</width>
+    <height>756</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,145 @@
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="2" column="0">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="resetInstrBtn">
+         <property name="text">
+          <string>Reset All</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../materials.qrc">
+           <normaloff>:/materials/materials/reset.png</normaloff>:/materials/materials/reset.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="clearGraphBtn">
+         <property name="text">
+          <string>Clear Graph</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="1">
+        <widget class="QComboBox" name="measInterval">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <property name="currentText">
+          <string>1 s</string>
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>250 ms</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>500 ms</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 s</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>10 s</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>60 s</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Measure Delay</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="documentMode">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="smua">
+        <attribute name="icon">
+         <iconset resource="../materials.qrc">
+          <normaloff>:/materials/materials/mosfet.png</normaloff>:/materials/materials/mosfet.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>SMU A</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="smub">
+        <attribute name="icon">
+         <iconset resource="../materials.qrc">
+          <normaloff>:/materials/materials/font.png</normaloff>:/materials/materials/font.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>SMU B</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_2"/>
+       </widget>
+      </widget>
+     </item>
      <item row="3" column="0">
       <widget class="QGroupBox" name="groupBox">
        <property name="maximumSize">
@@ -426,112 +565,6 @@
         </item>
        </layout>
       </widget>
-     </item>
-     <item row="1" column="0">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="resetInstrBtn">
-         <property name="text">
-          <string>Reset</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../materials.qrc">
-           <normaloff>:/materials/materials/reset.png</normaloff>:/materials/materials/reset.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Preferred</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>300</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="0">
-      <widget class="QTabWidget" name="tabWidget">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <property name="documentMode">
-        <bool>false</bool>
-       </property>
-       <widget class="QWidget" name="smua">
-        <attribute name="icon">
-         <iconset resource="../materials.qrc">
-          <normaloff>:/materials/materials/mosfet.png</normaloff>:/materials/materials/mosfet.png</iconset>
-        </attribute>
-        <attribute name="title">
-         <string>SMU A</string>
-        </attribute>
-       </widget>
-       <widget class="QWidget" name="smub">
-        <attribute name="icon">
-         <iconset resource="../materials.qrc">
-          <normaloff>:/materials/materials/font.png</normaloff>:/materials/materials/font.png</iconset>
-        </attribute>
-        <attribute name="title">
-         <string>SMU B</string>
-        </attribute>
-        <layout class="QGridLayout" name="gridLayout_2"/>
-       </widget>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>48</width>
-           <height>21</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="clearGraphBtn">
-         <property name="text">
-          <string>Clear Graph</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </item>
     </layout>
    </item>
