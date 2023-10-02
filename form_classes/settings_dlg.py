@@ -16,7 +16,7 @@ class SettingsDialog(QDialog):
             'tcp':{
                 'ip': "192.168.0.56",
                 'port': 5025,
-                'timeout': 1000
+                'timeout': 5000
             },
             'misc': {},
             'graph':{}
