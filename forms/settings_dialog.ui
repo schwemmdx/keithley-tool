@@ -147,11 +147,14 @@
          <property name="suffix">
           <string> ms</string>
          </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
          <property name="value">
-          <number>100</number>
+          <number>2000</number>
          </property>
         </widget>
        </item>
