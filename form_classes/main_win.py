@@ -40,7 +40,7 @@ class MainGUI(QMainWindow):
         self.errorDlg = ErrorDialog(self,instr=self.instr)
         self.smuBasicControl = SMUControlWidget(self,instr=self.instr)
         self.tcpConsole = TCPConsole(self,self.instr)
-        self.sweepWidget = SweepWidget(self)
+        self.sweepWidget = SweepWidget(self,self.instr)
 
         self.stack = QStackedWidget(self)
 
