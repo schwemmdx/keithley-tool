@@ -20,7 +20,7 @@ There are many projects out there using some sort of VISA Library... and for me 
 - [x] Raw Console to communicate to Endpoint
 ![console_view](https://github.com/schwemmdx/keithley-tool/assets/57574663/c41354c2-9850-4864-b35d-f994eaf35206)
 
--[X] Error Widget for displaying internal errors
+- [X] Error Widget for displaying internal errors
 ![error_view](https://github.com/schwemmdx/keithley-tool/assets/57574663/ad666715-cfb0-4e0b-b77b-34f01232605f)
 
 
