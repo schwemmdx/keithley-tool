@@ -64,7 +64,6 @@ class SMUChannelControl(QWidget):
         
         config['measure']['rangev'] = self.ui.measVoltRange.currentText()
         config['measure']['rangei'] = self.ui.measCurrRange.currentText()
-        config['measure']['interval'] = self.ui.measInterval.currentText()
         return config
 
     def applySettings(self):
