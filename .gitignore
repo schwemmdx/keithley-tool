@@ -5,3 +5,4 @@ modules/__pycache__
 pyforms
 __pycache__
 logs
+settings/sweep_settings.json

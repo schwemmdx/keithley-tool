@@ -2,19 +2,19 @@
     "smua": {
         "enabled": true,
         "type": "Voltage",
-        "limit": 0.01,
+        "limit": 0.1,
         "start": 0.0,
-        "stop": 0.0,
-        "step": 0.0,
+        "stop": 0.7,
+        "npts": 25,
         "int_time": "Auto"
     },
     "smub": {
-        "enabled": true,
+        "enabled": false,
         "type": "Voltage",
         "limit": 0.01,
         "start": 0.0,
         "stop": 0.0,
-        "step": 0.0,
+        "npts": 0,
         "int_time": "Auto"
     }
 }
