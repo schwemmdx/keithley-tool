@@ -16,6 +16,7 @@
         "modules/syntax.py",
         "materials.qrc",
         "forms/sweep_widget.ui",
-        "forms/error_dlg.ui"
+        "forms/error_dlg.ui",
+        "forms/smu_sweep_config_widget.ui"
     ]
 }
