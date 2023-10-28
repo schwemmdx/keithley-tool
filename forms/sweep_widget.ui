@@ -23,7 +23,49 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_8">
-      <item row="0" column="0" colspan="3">
+      <item row="2" column="3">
+       <widget class="QPushButton" name="runBtn">
+        <property name="text">
+         <string>Run</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../materials.qrc">
+          <normaloff>:/materials/materials/check.png</normaloff>:/materials/materials/check.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>16</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="statusLabel">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="StopBtn">
+        <property name="text">
+         <string>Stop</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../materials.qrc">
+          <normaloff>:/materials/materials/cross.png</normaloff>:/materials/materials/cross.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="4">
        <layout class="QGridLayout" name="gridLayout_7">
         <property name="sizeConstraint">
          <enum>QLayout::SetFixedSize</enum>
@@ -46,164 +88,8 @@
               <bool>true</bool>
              </property>
              <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="2">
-               <widget class="QComboBox" name="aTypeBox">
-                <item>
-                 <property name="text">
-                  <string>Voltage</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Current</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Constant</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Stop</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QDoubleSpinBox" name="aStartVal">
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="aStartLabel">
-                <property name="text">
-                 <string>Start</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="QComboBox" name="aIntTimeBox">
-                <item>
-                 <property name="text">
-                  <string>Auto</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Low</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Mid</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>High</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="4" column="2">
-               <widget class="QDoubleSpinBox" name="aStepVal">
-                <property name="frame">
-                 <bool>true</bool>
-                </property>
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Step</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>59</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
               <item row="0" column="0">
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Type</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QDoubleSpinBox" name="aEndVal">
-                <property name="frame">
-                 <bool>true</bool>
-                </property>
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0" colspan="2">
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>Integration Time</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QDoubleSpinBox" name="aLimitVal">
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.010000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Limit</string>
-                </property>
-               </widget>
+               <layout class="QGridLayout" name="aLayout"/>
               </item>
              </layout>
             </widget>
@@ -220,164 +106,8 @@
               <bool>true</bool>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>Stop</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="0">
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>Type</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="QComboBox" name="bIntTimeBox">
-                <item>
-                 <property name="text">
-                  <string>Auto</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Low</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Mid</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>High</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="4" column="2">
-               <widget class="QDoubleSpinBox" name="bStepVal">
-                <property name="frame">
-                 <bool>true</bool>
-                </property>
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <spacer name="horizontalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>104</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="2">
-               <widget class="QComboBox" name="bTypeBox">
-                <item>
-                 <property name="text">
-                  <string>Voltage</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Current</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Constant</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="5" column="0" colspan="2">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>Integration Time</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QDoubleSpinBox" name="bEndVal">
-                <property name="frame">
-                 <bool>true</bool>
-                </property>
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>Step</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="bStartLabel">
-                <property name="text">
-                 <string>Start</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QDoubleSpinBox" name="bStartVal">
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QDoubleSpinBox" name="bLimitVal">
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>200.000000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.010000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_16">
-                <property name="text">
-                 <string>Limit</string>
-                </property>
-               </widget>
+               <layout class="QGridLayout" name="bLayout"/>
               </item>
              </layout>
             </widget>
@@ -450,12 +180,12 @@
                <widget class="QComboBox" name="axisYType">
                 <item>
                  <property name="text">
-                  <string>Voltage</string>
+                  <string>Current</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Current</string>
+                  <string>Voltage</string>
                  </property>
                 </item>
                 <item>
@@ -560,59 +290,18 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>16</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="0">
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>116</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="StopBtn">
-        <property name="text">
-         <string>Stop</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../materials.qrc">
-          <normaloff>:/materials/materials/cross.png</normaloff>:/materials/materials/cross.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="runBtn">
-        <property name="text">
-         <string>Run</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../materials.qrc">
-          <normaloff>:/materials/materials/check.png</normaloff>:/materials/materials/check.png</iconset>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
    <item row="0" column="1">
     <layout class="QVBoxLayout" name="canvasLayout"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="clearPlotBtn">
+     <property name="text">
+      <string>Clear Plot</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
