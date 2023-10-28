@@ -476,7 +476,7 @@ class K2636:
             elif param == 'p':
                 func = smu.measure.p
     
-            results[param] = func()
+            results[param] = float(func())
         return results
 
     def setOutput(self,smuName:str,state:bool):
