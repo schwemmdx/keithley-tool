@@ -7,7 +7,7 @@ import threading
 from typing import Any
 
 def get_default_channel_config():
-    """"Standard Basic Configuration noeeded for the SMU CH to operate at a given Operation Point"""
+    """"Standard Basic Configuration needed for the SMU CH to operate at a given Operation Point"""
     cfg = {
         'source':{
             'forcev' : True,
@@ -25,7 +25,23 @@ def get_default_channel_config():
     }
     return cfg
 
+def get_vRange(levelv):
+    vlimits = [0.2,2,20,200]
+    choice = None
+    for limit in vlimits:
+        if levelv <= limit:
+            choice = limit
+            break
+    return choice
 
+def get_iRange(leveli):
+    iLimits = [1e-9,10e-9,100e-9,1e-6,10e-6,100e-6,1e-3,10e-3,100e-3,1,1.5]
+    choice = None
+    for limit in iLimits:
+        if leveli <= limit:
+            choice = limit
+            break
+    return choice
 
 class K2636SubClass:
     """Base Class for all subclasses of SMU in order to mimic the LUA-like beaviour of referencing"""
