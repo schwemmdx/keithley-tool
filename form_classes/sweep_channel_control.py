@@ -3,6 +3,7 @@ from typing import Optional
 import PySide6.QtCore
 from pyforms.ui_smu_sweep_config_widget import Ui_SweepConfigWidget
 
+from modules.keithley_lib import get_vRange,get_iRange
 
 from PySide6.QtWidgets import QWidget,QMessageBox
 
@@ -38,6 +39,14 @@ class SweepConfigWidget(QWidget):
         self.cfg['stop'] = self.ui.endVal.value()
         self.cfg['npts'] = self.ui.nPts.value()
         self.cfg['limit'] = self.ui.limitVal.value()
+
+
+        if self.cfg['force'] == 'v':
+            self.cfg['limitv'] = get_vRange(self.cfg['stop'])
+
+        elif self.cfg['force'] == 'i':
+            self.cfg['limiti'] = get_vRange(self.cfg['stop'])
+            
 
         if self.cfg['type'] == 'lin':
             self.cfg['vals'] = np.linspace(self.cfg['start'],self.cfg['stop'],num = self.cfg['npts'])

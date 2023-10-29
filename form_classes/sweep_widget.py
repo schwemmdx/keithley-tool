@@ -28,19 +28,16 @@ class SweepWidget(QWidget):
         self.ui.setupUi(self)
 
         self.smuaWidget = SweepConfigWidget(self)
-        self.bmuaWidget = SweepConfigWidget(self)
+        self.smubWidget = SweepConfigWidget(self)
 
         self.ui.aLayout.addWidget(self.smuaWidget)
-        self.ui.bLayout.addWidget(self.bmuaWidget)
+        self.ui.bLayout.addWidget(self.smubWidget)
 
         self.canvas = pg.PlotWidget()
-        #self.canvas.setViewportUpdateMode(QGraphicsView.BoundingRectViewportUpdate)
+
         self.ui.canvasLayout.addWidget(self.canvas)
 
-        #self.updatePlotThread =Thread(target=self.updatePlot)
-
         self.sweepAborted = False
-        self.updatePlotRunning = False
 
         self.smuaCfg = get_default_channel_config()
         self.smubCfg = get_default_channel_config()
@@ -64,23 +61,46 @@ class SweepWidget(QWidget):
         self.ui.StopBtn.clicked.connect(self.stopSweep)
         self.ui.clearPlotBtn.clicked.connect(self.clearPlot)
 
+
+        for target in [
+            self.ui.axisXSMU,
+            self.ui.axisYSMU,
+            self.ui.axisXType,
+            self.ui.axisYType
+        ]:
+            target.currentIndexChanged.connect(self.changeDisplayedData)
+        
+        
         self.smuaPen = pg.mkPen({'width': 2,'color': "#4E79A7",'cosmetic':True})
         
-        self.trace= pg.PlotDataItem(x= self.sweepData['smua']['v'],y = self.sweepData['smua']['i'],
+        self.trace= pg.PlotDataItem(x= [],y = [],
              pen=self.smuaPen,symbol ='o', symbolBrush =("#4E79A7"),antialias=True)
-
+        self.changeDisplayedData()
         self.canvas.addItem(self.trace)
         
+    
+    def changeDisplayedData(self):
+        xsmu = self.ui.axisXSMU.currentText().replace(' ','').lower()
+        ysmu = self.ui.axisYSMU.currentText().replace(' ','').lower()
 
+        if self.ui.axisXType.currentText() == 'Voltage':
+            xVal = 'v'
+        else: 
+            xVal = 'i'
 
+        if self.ui.axisYType.currentText() == 'Voltage':
+            yVal = 'v'
+        else: 
+            yVal = 'i'
+        self.trace.setData(x=self.sweepData[xsmu][xVal],y=self.sweepData[ysmu][yVal])
 
     def runSweep(self):
-
 
             #check if we only perform a sweep on one smu 
             if self.ui.smuA_grp.isChecked() and self.ui.smuB_grp.isChecked():
                 #perform dual smu sweep
-                self.sweepDualSMU(self.getSweepValues())
+                self.sweepDualSMU()
+            
             elif self.ui.smuA_grp.isChecked():
                 #perfom sweep on smua
                 self.sweepSMU('smua')
@@ -95,6 +115,7 @@ class SweepWidget(QWidget):
         if smuName == 'smua':
             smuWidget = self.smuaWidget
             smuHandle = self.instr.smua
+
         else: 
             smuWidget = self.smubWidget
             smuHandle = self.instr.smub
@@ -119,13 +140,14 @@ class SweepWidget(QWidget):
             if self.sweepAborted:    
                 break
             force_fun(smuName,val,cfg['limit'])
+            for smu in ['smua','smub']:
+                results = self.instr.measure(smu,['i','v'])
+                print(f"{smu}: {val} -  {results['v']},{results['i']}")
+                
+                self.sweepData[smu]['i'] = np.append(self.sweepData[smu]['i'],results['i'])
+                self.sweepData[smu]['v'] = np.append(self.sweepData[smu]['v'],val)
 
-            results = self.instr.measure(smuName,['i','v'])
-            print(f"{val}: {results['v']},{results['i']}")
-            self.sweepData[smuName]['i'] = np.append(self.sweepData[smuName]['i'],results['i'])
-            self.sweepData[smuName]['v'] = np.append(self.sweepData[smuName]['v'],val)
-
-            self.trace.setData(self.sweepData[smuName]['v'],self.sweepData[smuName]['i'],clear=True)
+            self.changeDisplayedData()
             QApplication.processEvents()
 
         if self.sweepAborted:
@@ -137,46 +159,38 @@ class SweepWidget(QWidget):
         self.sweepAborted = False
 
 
-    def sweepDualSMU(self,sweepCfg):
-        pass
+    def sweepDualSMU(self):
+        
+        aCfg = self.smuaWidget.getConfig()
+        bCfg = self.smubWidget.getConfig()
+
+        #check if one of the smu's is in constant mode 
+        if aCfg['type'] == 'const':
+            constCfg = aCfg
+            constSMU = 'smua'
+            sweepSMU = 'smub'
+            constHandle = self.instr.smua
+        elif bCfg['type'] == 'const':
+            constCfg = bCfg
+            constSMU = 'smub'
+            sweepSMU = 'smua'
+            constHandle = self.instr.smub
+    
+        if constCfg['force'] == 'v':
+            self.instr.applyVoltage(constSMU,constCfg['vals'][0],constCfg['limit'])
+        elif bCfg['force'] == 'i':
+            self.instr.applyCurrent(constSMU,constCfg['vals'][0],constCfg['limit'])
+        constHandle.source.output(1)
+        self.sweepSMU(sweepSMU)
+        constHandle.source.output(0)
+        constHandle.reset()
+
 
     def stopSweep(self):
         self.sweepAborted = True
     
 
-    def sweepStateChanged(self,state):
-        pass
 
-    def getSweepValues(self):
-        aVals = {
-            'enabled': self.ui.smuA_grp.isChecked(),
-            'type': self.ui.aTypeBox.currentText(),
-            'limit': self.ui.aLimitVal.value(),
-            'start': self.ui.aStartVal.value(),
-            'stop': self.ui.aEndVal.value(),
-            'npts':self.ui.aNpts.value(),
-            'int_time': self.ui.aIntTimeBox.currentText()
-        }
-        bVals = {
-            'enabled': self.ui.smuB_grp.isChecked(),
-            'type': self.ui.bTypeBox.currentText(),
-            'limit': self.ui.bLimitVal.value(),
-            'start': self.ui.bStartVal.value(),
-            'stop': self.ui.bEndVal.value(),
-            'npts':self.ui.bNpts.value(),
-            'int_time': self.ui.bIntTimeBox.currentText()
-        }
-        return {'smua': aVals,'smub':bVals}
-
-    def renameLimit(self,cfg,limitBox,arg):
-        if arg == 0:
-            limitBox.setSuffix(" A")
-            cfg['source']['forcev'] = True
-            cfg['source']['forcei'] = False
-        elif arg == 1:
-            limitBox.setSuffix(" V")
-            cfg['source']['forcev'] = False
-            cfg['source']['forcei'] = True
 
     def clearPlot(self):
         ans = QMessageBox.question(self,"Clear Plot","Are you sure to clean all tracies?")
@@ -184,5 +198,8 @@ class SweepWidget(QWidget):
             self.trace.clear()
             self.sweepData['smua']['i'] = []
             self.sweepData['smua']['v'] = []
+            self.sweepData['smub']['i'] = []
+            self.sweepData['smub']['v'] = []
           
-        
+    
+
