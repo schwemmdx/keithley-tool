@@ -6,185 +6,267 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
-    <height>278</height>
+    <width>351</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
-    <widget class="QLabel" name="TypeLabel">
-     <property name="text">
-      <string>Type</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>109</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="2">
-    <widget class="QComboBox" name="sweepTypeBox">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <property name="text">
-       <string>Linear</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="TypeLabel_2">
+         <property name="text">
+          <string>Sweep Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="TypeLabel">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="sweepTypeBox">
+           <item>
+            <property name="text">
+             <string>Linear</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Log</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Constant</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Unused</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>List</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="FoceLabel">
+           <property name="text">
+            <string>Force</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="forceType">
+           <item>
+            <property name="text">
+             <string>Voltage</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Current</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="LimitLable">
+           <property name="text">
+            <string>Limit</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QDoubleSpinBox" name="limitVal">
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="maximum">
+            <double>200.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>0.010000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="StartLabel">
+           <property name="text">
+            <string>Start</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QDoubleSpinBox" name="startVal">
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-200.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>200.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="StopLabel">
+           <property name="text">
+            <string>Stop</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QDoubleSpinBox" name="endVal">
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-200.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>200.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="NbrPointsLabel">
+           <property name="text">
+            <string>Nbr. Points</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>83</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="5" column="2">
+          <widget class="QSpinBox" name="nPts">
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="minimum">
+            <number>10</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </item>
      <item>
-      <property name="text">
-       <string>Log</string>
-      </property>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
      </item>
      <item>
-      <property name="text">
-       <string>Constant</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="SweepListLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Sweep List</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="sweepList">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="documentTitle">
+          <string>Sweep List</string>
+         </property>
+         <property name="placeholderText">
+          <string>No Data </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
-     <item>
-      <property name="text">
-       <string>List</string>
-      </property>
-     </item>
-    </widget>
+    </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="FoceLabel">
-     <property name="text">
-      <string>Force</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QComboBox" name="forceType">
-     <item>
-      <property name="text">
-       <string>Voltage</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Current</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="LimitLable">
-     <property name="text">
-      <string>Limit</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QDoubleSpinBox" name="limitVal">
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="decimals">
-      <number>3</number>
-     </property>
-     <property name="maximum">
-      <double>200.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>0.010000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="StartLabel">
-     <property name="text">
-      <string>Start</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QDoubleSpinBox" name="startVal">
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="decimals">
-      <number>3</number>
-     </property>
-     <property name="minimum">
-      <double>-200.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>200.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="StopLabel">
-     <property name="text">
-      <string>Stop</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="2">
-    <widget class="QDoubleSpinBox" name="endVal">
-     <property name="frame">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="decimals">
-      <number>3</number>
-     </property>
-     <property name="minimum">
-      <double>-200.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>200.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="NbrPointsLabel">
-     <property name="text">
-      <string>Nbr. Points</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <widget class="QSpinBox" name="nPts">
-     <property name="frame">
-      <bool>true</bool>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="minimum">
-      <number>10</number>
-     </property>
-     <property name="maximum">
-      <number>999</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="SweepListLabel">
-     <property name="text">
-      <string>Sweep List</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="3">
-    <widget class="QLineEdit" name="sweepList"/>
-   </item>
-   <item row="8" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -192,13 +274,123 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>26</height>
+       <height>206</height>
       </size>
      </property>
     </spacer>
    </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Measure</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Parameter</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>141</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Range</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="measureVoltage">
+        <property name="text">
+         <string>Voltage</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QSpinBox" name="voltageRange">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::PlusMinus</enum>
+        </property>
+        <property name="suffix">
+         <string> V</string>
+        </property>
+        <property name="prefix">
+         <string>1e</string>
+        </property>
+        <property name="minimum">
+         <number>-6</number>
+        </property>
+        <property name="maximum">
+         <number>2</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="measureCurrent">
+        <property name="text">
+         <string>Current</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QSpinBox" name="currentRange">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::PlusMinus</enum>
+        </property>
+        <property name="showGroupSeparator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="suffix">
+         <string> A</string>
+        </property>
+        <property name="prefix">
+         <string>1e</string>
+        </property>
+        <property name="minimum">
+         <number>-12</number>
+        </property>
+        <property name="maximum">
+         <number>0</number>
+        </property>
+        <property name="value">
+         <number>-3</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>sweepTypeBox</tabstop>
+  <tabstop>forceType</tabstop>
+  <tabstop>limitVal</tabstop>
+  <tabstop>startVal</tabstop>
+  <tabstop>endVal</tabstop>
+  <tabstop>nPts</tabstop>
+  <tabstop>sweepList</tabstop>
+  <tabstop>measureVoltage</tabstop>
+  <tabstop>measureCurrent</tabstop>
+  <tabstop>voltageRange</tabstop>
+  <tabstop>currentRange</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

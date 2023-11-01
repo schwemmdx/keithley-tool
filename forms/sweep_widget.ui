@@ -23,17 +23,6 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_8">
-      <item row="2" column="3">
-       <widget class="QPushButton" name="runBtn">
-        <property name="text">
-         <string>Run</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../materials.qrc">
-          <normaloff>:/materials/materials/check.png</normaloff>:/materials/materials/check.png</iconset>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="2">
        <spacer name="verticalSpacer">
         <property name="orientation">
@@ -65,6 +54,17 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="3">
+       <widget class="QPushButton" name="runBtn">
+        <property name="text">
+         <string>Run</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../materials.qrc">
+          <normaloff>:/materials/materials/check.png</normaloff>:/materials/materials/check.png</iconset>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0" colspan="4">
        <layout class="QGridLayout" name="gridLayout_7">
         <property name="sizeConstraint">
@@ -77,39 +77,23 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
-            <widget class="QGroupBox" name="smuA_grp">
-             <property name="title">
-              <string>SMU A</string>
+            <widget class="QTabWidget" name="tabWidget">
+             <property name="currentIndex">
+              <number>0</number>
              </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="aLayout"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QGroupBox" name="smuB_grp">
-             <property name="title">
-              <string>SMU B</string>
-             </property>
-             <property name="flat">
+             <property name="documentMode">
               <bool>false</bool>
              </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_2">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="bLayout"/>
-              </item>
-             </layout>
+             <widget class="QWidget" name="smuaTab">
+              <attribute name="title">
+               <string>Tab 1</string>
+              </attribute>
+             </widget>
+             <widget class="QWidget" name="smubTab">
+              <attribute name="title">
+               <string>Tab 2</string>
+              </attribute>
+             </widget>
             </widget>
            </item>
           </layout>

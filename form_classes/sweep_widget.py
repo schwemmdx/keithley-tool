@@ -29,9 +29,11 @@ class SweepWidget(QWidget):
 
         self.smuaWidget = SweepConfigWidget(self)
         self.smubWidget = SweepConfigWidget(self)
+        self.ui.tabWidget.removeTab(0)
+        self.ui.tabWidget.removeTab(0)
+        self.ui.tabWidget.addTab(self.smuaWidget,"SMU A")
+        self.ui.tabWidget.addTab(self.smubWidget,"SMU B")
 
-        self.ui.aLayout.addWidget(self.smuaWidget)
-        self.ui.bLayout.addWidget(self.smubWidget)
 
         self.canvas = pg.PlotWidget()
 
@@ -141,7 +143,7 @@ class SweepWidget(QWidget):
                 break
             force_fun(smuName,val,cfg['limit'])
             for smu in ['smua','smub']:
-                results = self.instr.measure(smu,['i','v'])
+                results = self.instr.measure(smu,['i','v'],)
                 print(f"{smu}: {val} -  {results['v']},{results['i']}")
                 
                 self.sweepData[smu]['i'] = np.append(self.sweepData[smu]['i'],results['i'])
