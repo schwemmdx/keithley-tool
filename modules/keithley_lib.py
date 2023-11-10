@@ -12,15 +12,16 @@ def get_default_channel_config():
         'source':{
             'forcev' : True,
             'forcei' : False,
-            'levelv' : 1,
-            'limitv' : 1,
-            'limiti' : 1e-3,
-            'leveli' : 1e-3
+            'levelv' : 0,
+            'limitv' : 20,
+            'limiti' : 1.0,
+            'leveli' : 0
         },           
         'measure':{
             'rangev': 'auto',
             'rangei':'auto',
             'interval': 1,
+            'delay': 1
         }
     }
     return cfg
@@ -186,12 +187,12 @@ class Measure:
         
     def i(self,n=1):
         self.sock.write('i = '+self.smuName+'.measure.i()\nprint(i)')
-        return self.sock.read()
+        return float(self.sock.read())
 
     def v(self,n=1):
         #self.sock.write(self.smuName+'.count = '+str(n))
         self.sock.write('v = '+self.smuName+'.'+'measure.v()\nprint(v)')
-        return self.sock.read()
+        return float(self.sock.read())
 
     def iv(self,n=1):
         #self.sock.write(self.smuName+'.count = '+str(n))
@@ -203,13 +204,13 @@ class Measure:
     def p(self,n=1):
         #self.sock.write(self.smuName+'.count = '+str(n))
         self.sock.write('p = '+self.smuName+'.'+'measure.p()\nprint(p)')
-        val = self.sock.read()
+        val = float(self.sock.read())
         return val
 
     def r(self,n=1):
         #self.sock.write(self.smuName+'.count = '+str(n))
         self.sock.write('r = '+self.smuName+'.'+'measure.r() print(r)')
-        return self.sock.read()
+        return float(self.sock.read())
 
     def autorangeI(self,state):
         self.sock.write(self.smuName+".measure.autorangei ="+str(state))
@@ -229,7 +230,8 @@ class Measure:
         else:
             self.sock.write(self.smuName+'.measure.nplc='+str(val))
 
-
+    def delay(self,state):
+        self.sock.write(f"{self.smuName}.measure.delay={str(state)}") 
 
 class SMU:
    
@@ -399,21 +401,22 @@ class K2636:
             raise NotImplementedError
         return s
     def _verifyRangeInput(self,s,iRange,vRange):
-        if not iRange.lower() =='auto':
-            s.measure.rangeI(str(iRange))
+        if not iRange =='auto':
+            s.measure.rangeI(iRange)
         else:
            
             s.measure.autorangeI(1)
         
-        if not vRange.lower() == 'auto':
-            s.measure.rangeV(str(vRange))
+        if not vRange == 'auto':
+            s.measure.rangeV(vRange)
         else:
             s.measure.autorangeV(1)
             
     def applyConfig(self,smuName,cfg):
-        """Sends the given Config via the underlying tcp socket to the intrument"""
+        """Sends the given Config via the underlying tcp socket to the instrument"""
         src = cfg['source']
         meas = cfg['measure']
+        
         if cfg['source']['forcev']:
             #voltage is force
             self.applyVoltage(smuName,src['levelv'],src['limiti'],meas['rangei'],meas['rangev'])
@@ -441,7 +444,7 @@ class K2636:
         s= self._veritfySmuName(smu)
         s.measure.nplc(tInt*fLine)
                
-    def applyVoltage(self,smu,volts,ilim=1e-2,iRange='auto',vRange='auto'):
+    def applyVoltage(self,smu,volts,ilim=1e-2,vRange='auto',iRange='auto'):
         """Simple High Level API to apply a voltage level <volts> to an SMU (a or b)
         The underlying handling for range and limits are derived from the given input
         """
