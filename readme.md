@@ -24,13 +24,57 @@ There are many projects out there using some sort of VISA Library... and for me 
 ![error_view](https://github.com/schwemmdx/keithley-tool/assets/57574663/ad666715-cfb0-4e0b-b77b-34f01232605f)
 
 
-- [ ] Sweep Mode with One/Both SMUs for device characterisation 
+- [x] Sweep Mode with One/Both SMUs for device characterisation
+   ![image](https://github.com/schwemmdx/keithley-tool/assets/57574663/807e71a3-2b75-4608-8722-d4f353bf9298)
+
 - [ ] Script Managment Helper to easily upload tsp-script and various data
 
 ## What library for communication is used?
-Self written simple and lightweight class for basic interfacing.
->More Info is coming later :)
->
+### Overview
+Similar to the lua scripting concept of the interla tsp language, ill tried to stick to the coding scheme with the keithley-tool tibrary.
+The Main Class used is `K2636`with its multiple sub-classes 
+a) `smua`
+b) `smub`
+c) `display`
+d) `error_queue`
+e) `tcpSock`
+
+#### a) & b)
+these are the _physical_ smu's inside the K2636 Housing. Each of them consists of an subclass `measure` and `source` with it's respective methods according to the reference manual (currently only a few a implemeted, but in the future maybe will be extended :) )
+#### c)
+According to the reference manual, these subclass represents the display object and also ... only a few methods are implemented till now.
+#### d) 
+Ahh... Yes... Errors!
+Rather sophisticaed error handling is not what we are talking about. This class represents the error-queue on the K2636 device. The errors during operation are stored on it, can be gathered, thus automatically deleted on the K2636.
+#### e)
+The core of the library. Just a basic __tcp__ socket conneted to the `raw` port of the keithley's tcp socket. Usually the communication is done via ascii-strings. therefore everything is built on top of this communication class. Till now i wasn't able to coop with the lack of acknowledgement by the K2636, therefore it tries to read, directly after you send something out to the K2636, till an timeout occures.
+
+You can also use the library for script based applications as follows:
+```
+from modules.keithley_lib import K2636
+
+k = K2636()
+k.tcpConnect("192.168.0.56",5025)
+k.display.setText("Hello World")
+```
+This should set the displayed text to _hello woorld_ ... obviously!
+
+```
+from modules.keithley_lib import K2636,get_default_channel_config
+
+k = K2636()
+k.tcpConnect("192.168.0.56",5025)
+k.applyVoltage("smua",1.25,ilim=1e-2)
+k.setOutput('smua',True)
+```
+This applies 1.25 V with an comliance of 10 mA to SMUA. Because of electrical savety reasons, the output needs to be manually switched on. Dont worry, the interlock prevents voltages above 30V DC, if you didn't bridge the interlock on the K2636 manually.
+
+```
+results = k.measure('smua',['i','v'])
+
+```
+Measures the current and voltage on SMUA and returns a dictinary of the results requested by the parameter list provided.
+
 ## What GUI Library is used?
 I'll use PySide6 only for everything. 
 
