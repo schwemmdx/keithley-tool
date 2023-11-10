@@ -21,11 +21,12 @@ There are many projects out there using some sort of VISA Library... and for me 
 ![console_view](https://github.com/schwemmdx/keithley-tool/assets/57574663/c41354c2-9850-4864-b35d-f994eaf35206)
 
 - [X] Error Widget for displaying internal errors
-![error_view](https://github.com/schwemmdx/keithley-tool/assets/57574663/ad666715-cfb0-4e0b-b77b-34f01232605f)
+   ![image](https://github.com/schwemmdx/keithley-tool/assets/57574663/807e71a3-2b75-4608-8722-d4f353bf9298)
 
 
 - [x] Sweep Mode with One/Both SMUs for device characterisation
-   ![image](https://github.com/schwemmdx/keithley-tool/assets/57574663/807e71a3-2b75-4608-8722-d4f353bf9298)
+![Bildschirmfoto vom 2023-11-10 21-00-00](https://github.com/schwemmdx/keithley-tool/assets/57574663/580088ce-4cb5-4d38-978e-f1ab48ba3ffb)
+![Bildschirmfoto vom 2023-10-29 17-57-21](https://github.com/schwemmdx/keithley-tool/assets/57574663/869cf9fb-7d3f-46f5-a965-ed1eb9982728)
 
 - [ ] Script Managment Helper to easily upload tsp-script and various data
 
