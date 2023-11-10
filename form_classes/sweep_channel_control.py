@@ -9,11 +9,15 @@ from PySide6.QtWidgets import QWidget,QMessageBox,QAbstractItemView
 
 import numpy as np
 
+DEBUG_FLAG = True
+
 class SweepConfigWidget(QWidget):
 
-    def __init__(self, parent: QWidget ) -> None:
+    def __init__(self, parent: QWidget,smuName) -> None:
         super().__init__(parent)
+        self.smuName = smuName
         self.cfg = {
+            'smu':self.smuName,
             'type':'lin',
             'force':'v',
             'start':0,
@@ -26,6 +30,7 @@ class SweepConfigWidget(QWidget):
         self.ui.setupUi(self)
         self.sweepTypeChanged(0)
         self.forceTypeChanged(0)
+        self.measRangeTypeChanged()
         self.ui.forceType.currentIndexChanged.connect(lambda arg: self.forceTypeChanged(arg))
         self.ui.sweepTypeBox.currentIndexChanged.connect(lambda arg: self.sweepTypeChanged(arg))
 
@@ -38,6 +43,10 @@ class SweepConfigWidget(QWidget):
         self.ui.measureCurrent.clicked.connect(self.valueInputChanged)
         self.ui.measureVoltage.clicked.connect(self.valueInputChanged)
 
+        self.ui.rangeTypeVolt.currentIndexChanged.connect(self.measRangeTypeChanged)
+        self.ui.rangeTypeCurrent.currentIndexChanged.connect(self.measRangeTypeChanged)
+
+
     def valueInputChanged(self):
         self.cfg['start'] = self.ui.startVal.value()
         self.cfg['stop'] = self.ui.endVal.value()
@@ -46,15 +55,9 @@ class SweepConfigWidget(QWidget):
 
         self.cfg['measurei'] = self.ui.measureCurrent.isChecked()
         self.cfg['measurev'] = self.ui.measureVoltage.isChecked()
-        self.cfg['rangei'] = f"{self.ui.currentRange.value():.1e}"
-        self.cfg['rangei'] = f"{self.ui.voltageRange.value():.1e}"
-
-        if self.cfg['force'] == 'v':
-            self.cfg['limitv'] = get_vRange(self.cfg['stop'])
-
-        elif self.cfg['force'] == 'i':
-            self.cfg['limiti'] = get_vRange(self.cfg['stop'])
-            
+        
+        self.cfg['rangei'] = self.getCurrentRange()
+        self.cfg['rangev'] = self.getVoltageRange()
 
         if self.cfg['type'] == 'lin':
             self.cfg['vals'] = np.linspace(self.cfg['start'],self.cfg['stop'],num = self.cfg['npts'])
@@ -71,8 +74,37 @@ class SweepConfigWidget(QWidget):
             self.cfg['vals'] = [self.cfg['start']]
 
         self.__updateSweepList()
-        print(self.cfg)
+        if DEBUG_FLAG:
+            print('-'*20)
+            print(self.cfg)
+            print('-'*20)
 
+    def measRangeTypeChanged(self):
+        
+        for rTypeObj,rangeObj,cfgKey in zip([self.ui.rangeTypeVolt,self.ui.rangeTypeCurrent],
+                                     [self.ui.voltageRange,self.ui.currentRange],['rangev','rangei']):
+            if rTypeObj.currentText() == 'fixed':
+                rangeObj.setEnabled(True)
+            else:
+                rangeObj.setEnabled(False)
+                self.cfg[cfgKey]= 'auto'
+        self.valueInputChanged()
+    
+    def getVoltageRange(self):
+        if self.ui.rangeTypeVolt.currentText() == 'auto':
+            self.ui.voltageRange.setEnabled(False)
+            return 'auto'
+        else:
+            self.ui.voltageRange.setEnabled(True)
+            return 2*10**self.ui.voltageRange.value()
+        
+    def getCurrentRange(self):
+        if self.ui.rangeTypeCurrent.currentText() == 'auto':
+            self.ui.currentRange.setEnabled(False)
+            return 'auto'
+        else:
+            self.ui.currentRange.setEnabled(True)
+            return 10**self.ui.currentRange.value()
 
 
     def forceTypeChanged(self,arg):
@@ -90,6 +122,7 @@ class SweepConfigWidget(QWidget):
             self.ui.SweepListLabel.setText("Sweep List [A]")
             self.cfg['force'] = 'i'
         self.__updateSweepList()
+        self.__updateMeasureSelection()
         
     def sweepTypeChanged(self,arg):
         
@@ -162,5 +195,15 @@ class SweepConfigWidget(QWidget):
                         p.measureCurrent,
                         p.measureVoltage,
                         p.currentRange,
-                        p.voltageRange]:
+                        p.voltageRange,
+                        p.rangeTypeCurrent,
+                        p.rangeTypeVolt]:
             elem.setEnabled(state)
+
+    def __updateMeasureSelection(self):
+        if self.cfg['force'] == 'v':
+            self.ui.measureCurrent.setChecked(True)
+            self.ui.measureVoltage.setChecked(False)
+        else:
+            self.ui.measureCurrent.setChecked(False)
+            self.ui.measureVoltage.setChecked(True)
