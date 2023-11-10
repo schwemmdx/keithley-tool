@@ -26,7 +26,6 @@ There are many projects out there using some sort of VISA Library... and for me 
 
 - [x] Sweep Mode with One/Both SMUs for device characterisation
 ![Bildschirmfoto vom 2023-11-10 21-00-00](https://github.com/schwemmdx/keithley-tool/assets/57574663/580088ce-4cb5-4d38-978e-f1ab48ba3ffb)
-![Bildschirmfoto vom 2023-10-29 17-57-21](https://github.com/schwemmdx/keithley-tool/assets/57574663/869cf9fb-7d3f-46f5-a965-ed1eb9982728)
 
 - [ ] Script Managment Helper to easily upload tsp-script and various data
 
@@ -92,3 +91,7 @@ python ./main.py
 
 ## Materials and Art
 The used materials and icons are from _FreePic_ sourced via [flaticon](https://www.flaticon.com/de/autoren/special/lineal-color/14)
+
+## Whats next?
+1. Multicolor Sweeps, for each SMUA Sweep, another color needs to be used (sounds simple, but because of bad code, a few things need to be thrown around :/ )
+2. Some Settings that can be saved to disk and loaded again during startup of the application
