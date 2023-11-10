@@ -24,5 +24,6 @@
         <file>materials/netz_ein.png</file>
         <file>materials/beachtung.png</file>
         <file>materials/keine-ergebnisse.png</file>
+        <file>materials/startup.png</file>
     </qresource>
 </RCC>
